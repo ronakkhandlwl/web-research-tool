@@ -1,5 +1,6 @@
-from graph.flow_graph import build_graph
-from graph.state import ResearchState
+from agents.web_search_agent import web_search
+from agents.summarizer_agent import summarize_links
+from agents.insight_generator_agent import generate_insight
 from dotenv import load_dotenv
 
 
@@ -8,17 +9,18 @@ load_dotenv()
 
 def main():
     query = input("Enter your research topic: ")
-    initial_state = ResearchState()
-    initial_state.query = query
+    results = web_search(query)
 
-    graph = build_graph()
+    print("🔍 Searching complete. Summarizing...")
+    summary = summarize_links(results)
 
-    final_state = graph.invoke(initial_state)
+    print("🧠 Generating insights...")
+    insight = generate_insight(summary)
 
     with open("output/final_report.md", "w") as f:
-        f.write(final_state.insight)
+        f.write(insight["text"])
 
-    print("✅ Insight saved to output/final_report.md")
+    print("✅ Report generated at output/final_report.md")
 
 
 if __name__ == "__main__":
