@@ -26,12 +26,18 @@ def web_search(query, max_results=3):
         "api_key": api_key,
         "num": max_results
     }
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/90.0.4430.85 Safari/537.36"
+    }
 
     formatted_results = []
 
     try:
         # Make the API request
-        response = requests.get(base_url, params=params)
+        response = requests.get(base_url, params=params,
+                                headers=headers)
         response.raise_for_status()
         data = response.json()
 

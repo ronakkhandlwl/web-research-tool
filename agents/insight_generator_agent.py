@@ -1,5 +1,4 @@
 from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 from langchain_groq import ChatGroq
 import os
 
@@ -23,6 +22,6 @@ def generate_insight(summary):
         groq_api_key=groq_api_key,
         model_name="meta-llama/llama-4-scout-17b-16e-instruct")
 
-    chain = LLMChain(llm=llm, prompt=prompt)
+    chain = prompt | llm
     result = chain.invoke({"summary": summary})
-    return result['text']
+    return result.content
