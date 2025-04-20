@@ -1,0 +1,15 @@
+langchain
+openai
+faiss-cpu
+beautifulsoup4
+requests
+tiktoken
+agno
+googlesearch-python
+pycountry
+langchain_groq
+dotenv
+langchain-community
+sentence-transformers
+langchain-huggingface
+langgraph
