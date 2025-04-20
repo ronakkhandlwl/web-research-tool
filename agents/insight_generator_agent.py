@@ -24,4 +24,5 @@ def generate_insight(summary):
         model_name="meta-llama/llama-4-scout-17b-16e-instruct")
 
     chain = LLMChain(llm=llm, prompt=prompt)
-    return chain.invoke({"summary": summary})
+    result = chain.invoke({"summary": summary})
+    return result['text']

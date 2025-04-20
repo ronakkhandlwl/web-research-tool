@@ -1,6 +1,5 @@
-from agents.web_search_agent import web_search
-from agents.summarizer_agent import summarize_links
-from agents.insight_generator_agent import generate_insight
+from graph.agenthub_graph import build_agenthub_graph
+from graph.state import AgentHubState
 from dotenv import load_dotenv
 
 
@@ -8,19 +7,16 @@ load_dotenv()
 
 
 def main():
-    query = input("Enter your research topic: ")
-    results = web_search(query)
+    query = input("🧠 Enter your research topic: ")
 
-    print("🔍 Searching complete. Summarizing...")
-    summary = summarize_links(results)
+    graph = build_agenthub_graph()
+    state = AgentHubState(user_query=query)
 
-    print("🧠 Generating insights...")
-    insight = generate_insight(summary)
+    print("🚀 Running AgentHub Graph...")
+    final_state = graph.invoke(state)
 
     with open("output/final_report.md", "w") as f:
-        f.write(insight["text"])
-
-    print("✅ Report generated at output/final_report.md")
+        f.write(final_state["insights"])
 
 
 if __name__ == "__main__":
