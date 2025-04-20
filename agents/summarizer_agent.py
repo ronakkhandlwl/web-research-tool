@@ -4,6 +4,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_groq import ChatGroq
+from langchain.callbacks.tracers.langchain import LangChainTracer
 import os
 
 
@@ -25,7 +26,8 @@ def summarize_links(links):
         groq_api_key=groq_api_key,
         model_name="meta-llama/llama-4-scout-17b-16e-instruct")
 
-    qa = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
+    qa = RetrievalQA.from_chain_type(llm=llm, retriever=retriever,
+                                     callbacks=[LangChainTracer()])
 
     summary = qa.invoke("Summarize key insights from the above research data.")
     return summary
